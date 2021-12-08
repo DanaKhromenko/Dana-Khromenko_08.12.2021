@@ -1,0 +1,45 @@
+CREATE USER 'test'@'localhost' IDENTIFIED BY 'test';
+GRANT ALL PRIVILEGES ON * . * TO 'test'@'localhost';
+FLUSH PRIVILEGES;
+
+CREATE SCHEMA `prog_force` DEFAULT CHARACTER SET utf8;
+
+USE `prog_force`;
+
+CREATE TABLE `shops`
+(
+    `id`   BIGINT(11)  NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `type` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `categories`
+(
+    `id`      BIGINT(11)  NOT NULL AUTO_INCREMENT,
+    `name`    VARCHAR(45) NOT NULL,
+    `shop_id` BIGINT(11) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `products`
+(
+    `id`          BIGINT(11)  NOT NULL AUTO_INCREMENT,
+    `title`       VARCHAR(45) NOT NULL,
+    `price`       DECIMAL(11,2) NOT NULL,
+    `status`      VARCHAR(45) NOT NULL,
+    `category_id` BIGINT(11) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+--BY DEFAULT TABLES `shops` and `categories` WOULD BE FILLED AFTER YOU'LL RUN `main` METHOD
+--BUT IF YOU NEED TO FILL CATEGORIES WITH SQL QUERY USE THIS:
+INSERT INTO `shops` (`name`, `type`) VALUES ('Food shop', 'FOOD');
+INSERT INTO `shops` (`name`, `type`) VALUES ('Furniture shop', 'FURNITURE');
+
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Vegetable', '1');
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Meat', '1');
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Grocery', '1');
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Sofa', '2');
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Bed', '2');
+INSERT INTO `categories` (`name`, `shop_id`) VALUES ('Table', '2');
